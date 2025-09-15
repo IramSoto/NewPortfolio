@@ -1,0 +1,158 @@
+---
+const { name, info, tecnologies = [], modalId } = Astro.props;
+const titleId = `${modalId}-title`;
+---
+
+<a href={`#${modalId}`} class="card-link" aria-label={`Open ${name} details`}>
+    <div class="card">
+        <p class="card-title">{name}</p>
+    </div>
+</a>
+
+<div
+    id={modalId}
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby={titleId}
+>
+    <div class="modal-inner">
+        <a href="#" title="Close" class="modal-close" aria-label="Close">Close</a>
+
+        <div class="row">
+            <div class="col-30">
+                <h1 id={titleId}>{name}</h1>
+                <h2>Technologies</h2>
+
+                {tecnologies.length > 0 && (
+                    <ul class="tech-list">
+                        {tecnologies.map((item:string) => (
+                            <li><code><pre>{item}</pre></code></li>
+                        ))}
+                    </ul>
+                )}
+            </div>
+
+            <div class="col-70">
+                <p>{info}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* ---- inline code tags ---- */
+pre {
+    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
+        'DejaVu Sans Mono', monospace;
+    font-weight: normal;
+    background: linear-gradient(14deg, #d83333 0%, #f041ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+}
+code {
+    display: inline-block;
+    background:
+        linear-gradient(66.77deg, #f3cddd 0%, #f5cee7 100%) padding-box,
+        linear-gradient(155deg, #d83333 0%, #f041ff 18%, #f5cee7 45%) border-box;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 6px 8px;
+}
+
+/* ---- card ---- */
+.card {
+    width: 280px;
+    height: 150px;
+    background: linear-gradient(to right, rgb(20, 30, 48), rgb(36, 59, 85));
+    border-radius: 15px;
+    display: flex;
+    color: white;
+    justify-content: center;
+    position: relative;
+    flex-direction: column;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
+    overflow: hidden;
+}
+.card:hover {
+    box-shadow: rgba(217, 134, 234, 0.75) 0 0 50px, rgb(223, 190, 221) -3px 0 250px;
+    transform: translateY(-2px);
+}
+.card-title {
+    font-size: 30px;
+    margin-left: 15px;
+    font-weight: 600;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+/* ---- modal (no nesting SCSS) ---- */
+.modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+    z-index: 999;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+.modal:target {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+}
+.modal-inner {
+    width: 70%;
+    height: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2em;
+    background: rgb(255, 246, 246);
+    border-radius: 1rem;
+}
+.modal h1 {
+    font-size: 150%;
+    margin: 0 0 15px;
+}
+
+a { text-decoration: none; }
+
+.modal-close {
+    color: #404040;
+    line-height: 50px;
+    font-size: 80%;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 70px;
+}
+.modal-close:hover { color: #000; }
+
+.modal div:not(:last-of-type) { margin-bottom: 15px; }
+
+/* ---- layout inside modal ---- */
+.row {
+    height: 100%;
+    padding: 2px;
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+}
+.col-30 { padding: 2px; flex: 0 0 30%; }
+.col-70 { padding: 2px; flex: 1 1 70%; }
+
+.tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+</style>

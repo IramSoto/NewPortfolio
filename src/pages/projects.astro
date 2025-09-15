@@ -1,0 +1,167 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+
+const projects = [
+  {
+    id: 1,
+    name: "Quini-Mundi",
+    info: `This project is a web application designed to track user predictions for the Qatar 2022 World Cup matches. Users can submit their predictions for the results of each match. Points are awarded based on the accuracy of their predictions, including which team wins and the number of goals scored by each team. Additionally, the application displays a leaderboard showing which users are in the lead.
+
+The application supports different types of user roles, such as client and admin. Administrators have the ability to enter the actual results of the matches and manage the application to ensure everything is functioning correctly.`,
+    tec: ["Angular", "postgreSQL", "Node.js"],
+    status: 0,
+  },
+  {
+    id: 2,
+    name: "Grader",
+    info: `A lightweight grading tool that reads two CSV files—one with student responses and one with the answer key—then automatically grades every submission. It exports (1) a grades CSV with per-student scores/percentages and (2) a binary matrix CSV (1 = correct, 0 = incorrect) to enable deeper exam analysis. Designed for repeatable, fast grading with clean CSV outputs.`,
+    tec: ["Java"],
+    status: 0,
+  },
+  {
+    id: 3,
+    name: "Euler Solver",
+    info: `Java-based numerical solver for first-order differential equations using Euler’s method. Given f(x, y), an initial condition, a range, and a step size, it computes the approximate solution and renders a line chart of y vs. x. Built to be simple and educational, highlighting how step size affects accuracy and convergence.`,
+    tec: ["Java"],
+    status: 0,
+  },
+  {
+    id: 4,
+    name: "Grader v2",
+    info: `Second iteration of the grading tool, rewritten in Python with a desktop UI so instructors can load Excel (.xlsx) files instead of CSV. Users select a responses workbook and an answer-key sheet; the app validates structure, grades all submissions, and exports (1) a grades spreadsheet and (2) a 1/0 matrix per question for deeper analysis. Designed for non-technical users and repeatable grading.`,
+    tec: ["Python", "Pandas", "openpyxl", "Tkinter"], // adjust UI lib if different
+    status: 0,
+  },
+  {
+    id: 5,
+    name: "Bank Card (Debit)", // change to "Credit Card" if you prefer the original title
+    info: `Backend service that models debit card functionality: account creation, balance management, fund loading, and purchase authorization with daily/spending limits and insufficient-fund checks. Exposes secure REST endpoints and persists a transaction ledger for auditability. Includes idempotent operations to prevent double charges and exports simple statements for reconciliation.`,
+    tec: ["Node.js", "Express", "PostgreSQL", "Docker", "Jest"], // adjust if you used a different stack
+    status: 0,
+  },
+  {
+    id: 6,
+    name: "Endless Tale – Bar",
+    info: `Tablet/iPad self-service ordering app built with React Native for bars. Each table has a device where customers browse the menu, add items to a cart, and submit orders to the bar/kitchen. Designed for kiosk use with table association and a smooth, touch-friendly UI. A future karaoke mode will sync with the bar’s currently playing music and let guests request songs from their table.`,
+    tec: ["React Native"],
+    status: 0,
+  },
+];
+---
+
+<Layout>
+  <header class="title">
+    <button
+      class="icon-btn"
+      onclick="location.href='/'"
+      aria-label="Back to home"
+    >
+      <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+    </button>
+    <h1 class="page-title">My Projects</h1>
+  </header>
+
+  <main>
+    <div class="grid">
+      {
+        projects.map((project) => (
+          <Card
+            name={project.name}
+            info={project.info}
+            tecnologies={project.tec}
+            modalId={`modal-${project.id}`}
+          />
+        ))
+      }
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .icon-btn {
+    all: unset; /* limpia estilos por defecto */
+    display: inline-grid;
+    place-items: center;
+    cursor: pointer;
+    line-height: 1;
+    min-width: 44px; /* buen área táctil */
+    min-height: 44px;
+    color: #000; /* o tu color de acento */
+  }
+
+  /* tamaño del ícono */
+  .icon-btn i {
+    font-size: clamp(
+      1.6rem,
+      3.2vw,
+      2.6rem
+    ); /* ← hazlo más grande/pequeño aquí */
+  }
+  .icon-btn:focus-visible {
+    outline: 2px solid var(--accent, #8a2be2);
+    outline-offset: 2px;
+  }
+  /* Title */
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 0.75rem;
+    padding: clamp(0.5rem, 2vw, 1.25rem) 1rem;
+  }
+  .title h1 {
+    margin: 0;
+    line-height: 1.2;
+    text-align: center;
+    font-size: clamp(1.5rem, 2.5vw + 0.5rem, 3rem);
+  }
+  .title a.back {
+    line-height: 1;
+    font-size: 1.25rem;
+  }
+
+  /* Main area adapts, no fixed heights */
+  main {
+    display: flex;
+    justify-content: center;
+    padding-inline: clamp(12px, 3vw, 32px);
+    padding-block: clamp(8px, 1.2vw, 16px);
+    min-block-size: 100svh; /* fills tall screens without breaking small ones */
+  }
+
+  /* Responsive grid that never looks too wide or too cramped */
+  .grid {
+    /* Bounded reading width so ultrawide monitors don’t stretch cards too much */
+    inline-size: min(1200px, 100%);
+    margin-inline: auto;
+
+    display: grid;
+    column-gap: clamp(16px, 1.6vw, 28px); /* espacio horizontal */
+    row-gap: clamp(8px, 1.2vw, 16px); /* ↓ reduce el vertical */
+    align-content: start; /* evita que se reparta el espacio extra entre filas */
+
+    /* 1 col on phones, scales up. Each card stays within comfortable width range */
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(clamp(240px, 28vw, 360px), 1fr)
+    );
+  }
+
+  /* Optional: gentle card frame if Card.astro renders a div */
+  .grid > div {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 0.75rem;
+    padding: clamp(12px, 2vw, 20px);
+    font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+  }
+
+  /* On medium+ screens, align title left while keeping a max width */
+  @media (min-width: 768px) {
+    .title {
+      justify-content: flex-start;
+      max-inline-size: min(1200px, 100%);
+      margin-inline: auto;
+    }
+  }
+</style>

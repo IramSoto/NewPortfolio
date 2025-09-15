@@ -1,0 +1,147 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ExperienceItem from "../components/ExperienceItem.astro";
+
+const experiences = [
+  {
+    company: "I4 Solutions",
+    title: "Full Stack Developer",
+    location: "Guatemala",
+    period: "Apr 2024 – Present",
+    bullets: [
+      "Designed and implemented specialized Python scripts to generate automated client reports, reducing manual work and improving data accuracy.",
+      "Configured and integrated Teltonika routers to collect and centralize IoT/production data for real-time monitoring.",
+      "Optimized Python pipelines for a ~30% efficiency gain via workflow improvements and best practices, increasing reliability of production analysis.",
+      "Containerized apps with Docker to enable consistent deployment across multiple environments and client sites.",
+      "Built a web app with Node.js and Vue.js to manage IoT device communication, improving usability and setup time.",
+      "Produced comprehensive technical documentation and UML diagrams to explain system architecture and code functionality.",
+    ],
+  },
+  {
+    company: "Smart Rewards",
+    title: "Full Stack Developer",
+    location: "Guatemala",
+    period: "Feb 2024 – Feb 2025",
+    bullets: [
+      "Implemented features tailored to client requirements, prioritizing efficiency and optimal solution design.",
+      "Optimized queries and views for large datasets, achieving ~40% faster render times.",
+      "Adopted coding standards and best practices to ensure long-term scalability, maintainability, and readability.",
+      "Created workflow/UML diagrams (diagrams.net) to support onboarding and clearly communicate processes to clients.",
+      "Built a lightweight automation utility for backend unit testing with Postman scripts to validate core flows and error handling.",
+      "Applied Scrum to manage deliverables and align iterative releases with client expectations.",
+      "Automated extraction and migration of Excel data into SQL Server using Python + pandas, streamlining data entry.",
+    ],
+  },
+  {
+    company: "One Solutions",
+    title: "Full Stack Developer",
+    location: "Guatemala",
+    period: "Sep 2023 – Jan 2024",
+    bullets: [
+      "Developed an Ionic mobile app for offline attendance; supervisors synced local data via REST APIs.",
+      "Refactored backend to a multi-tenant architecture with Node.js microservices for modularity and scale.",
+      "Improved reporting by fixing output data and tuning SQL Server stored procedures, cutting report latency by ~30%.",
+      "Supported implementations by deploying services for new clients and configuring environments on IIS and Nginx.",
+    ],
+  },
+  {
+    company: "Proper Business Solutions",
+    title: "Semi-Senior Developer",
+    location: "Guatemala",
+    period: "Oct 2022 – Jul 2023",
+    bullets: [
+      "Integrated a third-party API for invoice certification to meet external validation requirements.",
+      "Generated invoices with the Carbon library and dynamic QR codes for direct access to certified documents.",
+      "Enhanced the email dispatch system to automate delivery of certified invoices and improve reliability.",
+    ],
+  },
+];
+---
+
+<Layout>
+  <header class="title">
+    <button
+      class="icon-btn"
+      onclick="location.href='/'"
+      aria-label="Back to home"
+    >
+      <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+    </button>
+    <h1 class="page-title">Job Experience</h1>
+  </header>
+
+  <section class="wrap">
+    <div class="xp-grid">
+      {experiences.map((xp) => <ExperienceItem {...xp} />)}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 0.75rem;
+    padding: clamp(0.5rem, 2vw, 1.25rem) 1rem;
+  }
+  .title h1 {
+    margin: 0;
+    line-height: 1.2;
+    text-align: center;
+    font-size: clamp(1.5rem, 2.5vw + 0.5rem, 3rem);
+  }
+  .title a.back {
+    line-height: 1;
+    font-size: 1.25rem;
+  }
+  .icon-btn {
+    all: unset; 
+    display: inline-grid;
+    place-items: center;
+    cursor: pointer;
+    line-height: 1;
+    min-width: 44px;
+    min-height: 44px;
+    color: #000;
+  }
+
+  .icon-btn i {
+    font-size: clamp(
+      1.6rem,
+      3.2vw,
+      2.6rem
+    ); 
+  }
+  .icon-btn:focus-visible {
+    outline: 2px solid var(--accent, #8a2be2);
+    outline-offset: 2px;
+  }
+  .wrap {
+    max-width: min(1200px, 100%);
+    margin-inline: auto;
+    padding: clamp(16px, 3vw, 32px);
+    color: #111;
+  }
+
+  .xp-grid {
+    display: grid;
+    gap: clamp(14px, 2vw, 24px);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 900px) {
+    .xp-grid {
+      grid-template-columns: 1fr; 
+      gap: clamp(18px, 2.2vw, 28px);
+    }
+  }
+  @media (min-width: 768px) {
+    .title {
+      justify-content: flex-start;
+      max-inline-size: min(1200px, 100%);
+      margin-inline: auto;
+    }
+  }
+
+</style>

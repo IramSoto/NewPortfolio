@@ -1,0 +1,84 @@
+---
+interface Props {
+    company: string;
+    title: string;
+    location: string;
+    period: string;
+    bullets: string[];
+}
+const { company, title, location, period, bullets } = Astro.props;
+---
+
+<article class="xp-card">
+    <header class="xp-header">
+        <h3 class="xp-company">{company}</h3>
+        <div class="xp-meta">
+            <span class="xp-title">{title}</span>
+            <span class="xp-sep">•</span>
+            <span class="xp-period">{period}</span>
+            <span class="xp-sep">•</span>
+            <span class="xp-location">{location}</span>
+        </div>
+    </header>
+
+    <ul class="xp-list">
+        {bullets.map((b) => <li>{b}</li>)}
+    </ul>
+</article>
+
+<style>
+/* --- palette (reusa los colores de tus cards) --- */
+:root{
+    --card-bg-a: rgb(20, 30, 48);
+    --card-bg-b: rgb(36, 59, 85);
+    --accent-a: #d83333;
+    --accent-b: #f041ff;
+    --accent-c: #f5cee7;
+}
+
+/* --- card --- */
+.xp-card{
+    color: #fff;
+    border-radius: 16px;
+    padding: clamp(16px, 2vw, 24px);
+    /* doble fondo para borde con gradiente (igual que tus chips <code>) */
+    background:
+        linear-gradient(to right, var(--card-bg-a), var(--card-bg-b)) padding-box,
+        linear-gradient(155deg, var(--accent-a) 0%, var(--accent-b) 18%, var(--accent-c) 45%) border-box;
+    border: 1px solid transparent;
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+
+/* --- header --- */
+.xp-company{
+    margin: 0 0 .25rem 0;
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: .3px;
+}
+.xp-meta{
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem .75rem;
+    color: #cfd8e3;
+    font-size: clamp(.95rem, 1.1vw, 1.05rem);
+}
+.xp-title{ font-weight: 600; color: #dbe7ff; }
+.xp-period{ opacity: .95; }
+.xp-location{ opacity: .95; }
+.xp-sep{ opacity: .6; }
+
+/* --- list --- */
+.xp-list{
+    margin: 1rem 0 0 0;
+    padding-left: 1.1rem;
+    display: grid;
+    gap: .5rem;
+}
+.xp-list li{
+    line-height: 1.45;
+}
+
+/* spacing responsive entre tarjetas (lo controla el contenedor también) */
+:host{ display:block; }
+</style>
